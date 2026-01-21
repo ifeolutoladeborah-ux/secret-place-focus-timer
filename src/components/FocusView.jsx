@@ -1,5 +1,6 @@
 import React from 'react';
 import { Play, Pause, X, AlertCircle, FileText, Mic, Check } from 'lucide-react';
+import BibleReader from './BibleReader';
 
 const FocusView = ({
   focusWarning,
@@ -17,6 +18,8 @@ const FocusView = ({
   stopRecording,
   voiceNotes
 }) => {
+  const [showBible, setShowBible] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-stone-100 p-4">
       {focusWarning && (
@@ -75,6 +78,26 @@ const FocusView = ({
               Save Entry
             </button>
           </div>
+            <div className="bg-white rounded-3xl shadow-xl p-6">
+              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <Book className="w-5 h-5 text-emerald-600" />
+                Bible
+              </h3>
+              <div className="flex flex-col items-center justify-center h-64">
+                <div className="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+                  <Book className="w-12 h-12 text-emerald-600" />
+                </div>
+                <button
+                  onClick={() => setShowBible(true)}
+                  className="px-6 py-3 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all font-medium"
+                >
+                  Open Bible Reader
+                </button>
+                <p className="mt-4 text-sm text-gray-500 text-center">
+                  Read scripture during your fellowship time
+                </p>
+              </div>
+            </div>
 
           <div className="bg-white rounded-3xl shadow-xl p-6">
             <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
@@ -106,7 +129,11 @@ const FocusView = ({
           </div>
         </div>
       </div>
-    </div>
+      
+      {/* Bible Reader Modal */}
+    {showBible && <BibleReader onClose={() => setShowBible(false)} />}
+  </div>
+
   );
 };
 
