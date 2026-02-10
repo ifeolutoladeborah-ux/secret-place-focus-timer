@@ -1,5 +1,5 @@
-import React from 'react';
-import { Play, Pause, X, AlertCircle, FileText, Mic, Check } from 'lucide-react';
+import React, { useState } from 'react';
+import { Play, Pause, X, AlertCircle, FileText, Mic, Check, Book } from 'lucide-react';
 import BibleReader from './BibleReader';
 
 const FocusView = ({
@@ -58,26 +58,27 @@ const FocusView = ({
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="bg-white rounded-3xl shadow-xl p-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <FileText className="w-5 h-5 text-emerald-600" />
-              Journal
-            </h3>
-            <textarea
-              value={currentJournal}
-              onChange={(e) => setCurrentJournal(e.target.value)}
-              placeholder="Write your thoughts and prayers..."
-              className="w-full h-64 p-4 border-2 border-gray-200 rounded-xl resize-none focus:border-emerald-500 focus:outline-none"
-            />
-            <button
-              onClick={saveJournalEntry}
-              className="w-full mt-3 bg-emerald-500 text-white py-2 rounded-xl hover:bg-emerald-600 transition-all flex items-center justify-center gap-2"
-            >
-              <Check className="w-4 h-4" />
-              Save Entry
-            </button>
-          </div>
+<div className="grid md:grid-cols-3 gap-4">
+            <div className="bg-white rounded-3xl shadow-xl p-6">
+              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-emerald-600" />
+                Journal
+              </h3>
+              <textarea
+                value={currentJournal}
+                onChange={(e) => setCurrentJournal(e.target.value)}
+                placeholder="Write your thoughts and prayers..."
+                className="w-full h-64 p-4 border-2 border-gray-200 rounded-xl resize-none focus:border-emerald-500 focus:outline-none"
+              />
+              <button
+                onClick={saveJournalEntry}
+                className="w-full mt-3 bg-emerald-500 text-white py-2 rounded-xl hover:bg-emerald-600 transition-all flex items-center justify-center gap-2"
+              >
+                <Check className="w-4 h-4" />
+                Save Entry
+              </button>
+            </div>
+
             <div className="bg-white rounded-3xl shadow-xl p-6">
               <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                 <Book className="w-5 h-5 text-emerald-600" />
@@ -99,41 +100,40 @@ const FocusView = ({
               </div>
             </div>
 
-          <div className="bg-white rounded-3xl shadow-xl p-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <Mic className="w-5 h-5 text-emerald-600" />
-              Voice Notes
-            </h3>
-            <div className="flex flex-col items-center justify-center h-64">
-              <button
-                onClick={isRecording ? stopRecording : startRecording}
-                className={`w-24 h-24 rounded-full flex items-center justify-center transition-all ${
-                  isRecording 
-                    ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
-                    : 'bg-emerald-500 hover:bg-emerald-600'
-                }`}
-              >
-                <Mic className="w-12 h-12 text-white" />
-              </button>
-              <p className="mt-4 text-gray-600">
-                {isRecording ? 'Recording...' : 'Tap to record'}
-              </p>
-            </div>
-            <div className="mt-4 max-h-32 overflow-y-auto">
-              {voiceNotes.slice(-3).reverse().map((note) => (
-                <div key={note.id} className="mb-2">
-                  <audio src={note.url} controls className="w-full" />
-                </div>
-              ))}
+            <div className="bg-white rounded-3xl shadow-xl p-6">
+              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <Mic className="w-5 h-5 text-emerald-600" />
+                Voice Notes
+              </h3>
+              <div className="flex flex-col items-center justify-center h-64">
+                <button
+                  onClick={isRecording ? stopRecording : startRecording}
+                  className={`w-24 h-24 rounded-full flex items-center justify-center transition-all ${
+                    isRecording 
+                      ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
+                      : 'bg-emerald-500 hover:bg-emerald-600'
+                  }`}
+                >
+                  <Mic className="w-12 h-12 text-white" />
+                </button>
+                <p className="mt-4 text-gray-600">
+                  {isRecording ? 'Recording...' : 'Tap to record'}
+                </p>
+              </div>
+              <div className="mt-4 max-h-32 overflow-y-auto">
+                {voiceNotes.slice(-3).reverse().map((note) => (
+                  <div key={note.id} className="mb-2">
+                    <audio src={note.url} controls className="w-full" />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      
-      {/* Bible Reader Modal */}
-    {showBible && <BibleReader onClose={() => setShowBible(false)} />}
-  </div>
 
+        {/* Bible Reader Modal */}
+        {showBible && <BibleReader onClose={() => setShowBible(false)} />}
+      </div>
   );
 };
 
